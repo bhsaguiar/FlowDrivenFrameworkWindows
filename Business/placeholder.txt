@@ -1,0 +1,4 @@
+Add here the workflows related to the business.
+Group different subjects into sub-folders to ease read and maintenance.
+From the framework files, just invoke the workflows that you create here.
+Keeping everything separate is better for maintainability.

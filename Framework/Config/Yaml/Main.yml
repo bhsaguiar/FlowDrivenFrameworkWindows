@@ -1,0 +1,82 @@
+# Determines the execution order of the states on the state machine. 
+# Can be Producer, Consumer or Hybrid (combines Producer and Consumer)
+Flow: Hybrid
+
+# Define the Orchestrator folder that the process will use.
+# This setting will be used by default with Orchestrator Queue and with the Assets section that don't have a folder defined.
+# This setting can be helpful when using studio in case the setted folder isn't the correct one.
+#OrchestratorFolderName: FolderName
+
+# Define if the process should end the execution with a success status.
+# Even if the process was not successfully runned.
+ShouldEndWithSuccess: False
+
+# Define if the CloseAllApps should validate if the programs in the ProcessesToKill area are running
+ShouldThrowIfRunning: True
+
+# Folder to store the screenshots taken by TakeScreenshot workflow
+ScreenshotsFolder: Data\Screenshots
+
+# ------------------------------------------------------------------------------------------------------------------------
+
+# The queue settings
+Queue:
+
+    # Defines the queue type, it can be Orchestrator, CSV or EXCEL
+    # By default, CSV uses semicolon ";" as separator, you can change this on Framework\Transactions\DataSources\GetFromCSV.xaml file
+    Type: CSV
+    
+    # The queue name or the path (absolute or relative) to the CSV (*.csv) or EXCEL (*.xlsx/*.xls)
+    Name: Data\Sample.csv
+        
+    # Required only for EXCEL Type to specify what sheet name must be read
+#    Sheet: Sheet1
+
+# ------------------------------------------------------------------------------------------------------------------------
+
+# Settings regarding the behavior for local retries or process stop.
+Recover:
+
+    # The maximum number of local retries for the same transaction (Consumer phase only).
+    # The local retry count will not be used with Orchestrator queue.
+    MaxRetriesCount: 0
+
+    # The maximum number of fails accepted before stop the process.
+    MaxFailsCount: 2
+       
+    # Determines how the internal fails counter must be managed
+    # - Default = Always reset after a successful transaction or flow change
+    # - Balance = Decrements the fails counter for each successful transaction or reset it in flow change
+    # - Never = Never resets the fails counter except in flow change  
+    FailsResetMode: Default
+    
+# ------------------------------------------------------------------------------------------------------------------------
+
+# List of configuration files to merge with this one. 
+# Each configuration file overwrites the values of the previous one. (Sub-sections are merged)
+# All the configurations available on this file can be splitted in different files. The only requirement for this file is the Merge section.
+Merge:
+    - Framework\Config\Yaml\Logs.yml
+#    - AbsoluteOrRelativePathToYourFile.yml    
+
+# ------------------------------------------------------------------------------------------------------------------------
+
+# List of processes to kill in KillAllProcesses workflow.
+#ProcessesToKill:
+#    - msedge
+
+# ------------------------------------------------------------------------------------------------------------------------
+
+# List of assets to load automatically from Orchestrator at initialization phase.
+#Assets:
+#    AssetName1: Orchestrator_AssetName
+#    AssetName2: Orchestrator_AssetName
+#    AssetName3: Orchestrator_AssetName
+
+# ------------------------------------------------------------------------------------------------------------------------
+
+# List of credentials that will be used.
+# The credentials will not be loaded automatically.
+# This section is used to organize the credentials in a section.
+#Credentials:
+#    CredentialName: StoredCredentialName

@@ -1,0 +1,65 @@
+{
+  "name": "FlowDrivenFramework_Windows",
+  "projectId": "e1b94a86-c596-4d91-bbd0-71d50189689e",
+  "description": "A flexible process template that can run in different setups as Producer (Linear), Consumer (Transactional) or Hybrid.\r\n\r\nThe framework uses a text file in YAML standards which simplifies the setup.",
+  "main": "Main.xaml",
+  "dependencies": {
+    "Autossential.Activities": "[3.3.2]",
+    "Autossential.Configuration.Activities": "[1.1.0]",
+    "UiPath.Excel.Activities": "[2.20.2]",
+    "UiPath.System.Activities": "[23.4.3]",
+    "UiPath.UIAutomation.Activities": "[23.4.7]"
+  },
+  "webServices": [],
+  "entitiesStores": [],
+  "schemaVersion": "4.0",
+  "studioVersion": "21.4.4.0",
+  "projectVersion": "1.0.0",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "netFrameworkLazyLoading": false,
+    "isPausable": true,
+    "isAttended": false,
+    "requiresUserInteraction": true,
+    "supportsPersistence": false,
+    "workflowSerialization": "DataContract",
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ],
+    "executionType": "Workflow",
+    "readyForPiP": false,
+    "startsInPiP": false,
+    "mustRestoreAllDependencies": false,
+    "pipType": "ChildSession"
+  },
+  "designOptions": {
+    "projectProfile": "Developement",
+    "outputType": "Process",
+    "libraryOptions": {
+      "includeOriginalXaml": false,
+      "privateWorkflows": []
+    },
+    "processOptions": {
+      "ignoredFiles": []
+    },
+    "fileInfoCollection": [],
+    "modernBehavior": true
+  },
+  "expressionLanguage": "VisualBasic",
+  "entryPoints": [
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "1a641ca4-cce0-477f-ad1a-138f0b195423",
+      "input": [],
+      "output": []
+    }
+  ],
+  "isTemplate": true,
+  "templateProjectData": {
+    "defaultProjectDescription": "A flexible process template that can run in different setups as Producer (Linear), Consumer (Transactional) or Hybrid.",
+    "defaultProjectName": "FlowDrivenFramework"
+  },
+  "publishData": {},
+  "targetFramework": "Windows"
+}

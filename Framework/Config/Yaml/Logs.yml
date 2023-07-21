@@ -1,0 +1,38 @@
+# Add your custom logs here, e.g.:
+# BR01_PriceValue: The price must be greater than zero
+
+# As alternative, you can create your own BusinessLogs.yml (e.g) file an reference it on Main.yml under Merge section:
+
+
+# SYSTEM RESERVED!
+# The below log messages keys prefixed with "Framework_" should be preserved due they are used by the framework.
+
+# Static part of logging message. Calling Get Transaction Data.
+Framework_GetTransactionData: Processing transaction number {0}
+
+# Static part of logging message. No Data transition.
+Framework_NoMoreData: Process finished due to no more transaction data.
+
+# Static part of logging message. Error retrieving Transaction Data.
+Framework_GetTransactionDataError: Error getting transaction data for transaction number {0}. {1} at Source {2}
+
+# Static part of logging message. Processed Transaction succesful.
+Framework_Success: Transaction Successful
+
+# Static part of logging message. Processed Transaction failed with business exception.
+Framework_BusinessRuleException: Business rule exception - {0}
+
+# Static part of logging message. Processed Transaction failed with application exception.
+Framework_ApplicationException: System exception - {0} at Source {1}
+
+# Static part of logging message. Stop process requested from Orchestrator or Assistant.
+Framework_StopProcessRequested: Stop process requested
+
+# Static part of logging message. Maximum number of fails reached.
+Framework_MaxFailNumberReached: Maximum number of fails reached. Stopping the process.
+
+# Static part of logging message. The process was executed successfully
+Framework_SuccessfulExecution: The process was executed successfully
+
+# Static part of logging message. CSV or Excel read exception.
+Framework_TabularQueueTypeException: Ensure to configure the activity options correctly to work with your tabular data queue
