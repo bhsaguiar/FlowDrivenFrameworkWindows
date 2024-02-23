@@ -1,12 +1,12 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="InitAllSettings" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:acc="clr-namespace:Autossential.Configuration.Core;assembly=Autossential.Configuration.Core" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="InitAllSettings" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:aca="clr-namespace:Autossential.Configuration.Activities;assembly=Autossential.Configuration.Activities" xmlns:acc="clr-namespace:Autossential.Configuration.Core;assembly=Autossential.Configuration.Core" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property sap2010:Annotation.AnnotationText="The config type that should be used. Its defined on the Main workflow" Name="in_ConfigType" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Overwrites the default Folder Name defined in the configuration files by this one." Name="in_OrchestratorFolderName" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="The ConfigSection object which represents the configuration file.&#xA;Type 'ac:ConfigSection' ('clr-namespace:Autossential.Extensions.Configuration;assembly=Autossential.Extensions') could not be resolved and was automatically replaced with 'UnknownType'&#xA;Type 'aec:ConfigSection' ('clr-namespace:Autossential.Extensions.Configuration;assembly=Autossential.Extensions') could not be resolved and was automatically replaced with 'UnknownType'&#xA;Type 'acc:ConfigSection' ('clr-namespace:Autossential.Configuration.Core;assembly=Autossential.Configuration.Activities.Core') could not be resolved and was automatically replaced with 'UnknownType'" Name="out_Config" Type="OutArgument(acc:ConfigSection)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>901.6,602.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1006,1389</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>InitAllSettings_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="56">
@@ -39,6 +39,11 @@
       <x:String>UiPath.Core.Activities</x:String>
       <x:String>UiPath.Excel.Activities</x:String>
       <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>Autossential.Configuration.Activities</x:String>
+      <x:String>System.Numerics</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -79,9 +84,24 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
       <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>Autossential.Configuration.Activities</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Initializes the ConfigSection object and loads all assets." DisplayName="InitAllSettings" sap:VirtualizedContainerService.HintSize="538.4,447.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Initializes the ConfigSection object and loads all assets." DisplayName="InitAllSettings" sap:VirtualizedContainerService.HintSize="512,1324" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Int32" Name="assetFailsCount" />
     </Sequence.Variables>
@@ -91,34 +111,104 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Switch x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Load the config file based on the parameter passed" DisplayName="Switch Config Type" Expression="[If(in_ConfigType Is Nothing, String.Empty, in_ConfigType.ToLower)]" sap:VirtualizedContainerService.HintSize="496.8,195.2" sap2010:WorkflowViewState.IdRef="Switch`1_2">
-      <Switch.Default>
-        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LoadYaml workflow" sap:VirtualizedContainerService.HintSize="360.8,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\System\Initialization\LoadYaml.xaml">
-          <ui:InvokeWorkflowFile.Arguments>
-            <OutArgument x:TypeArguments="acc:ConfigSection" x:Key="out_Config">[out_Config]</OutArgument>
-            <OutArgument x:TypeArguments="x:Int32" x:Key="out_assetFailsCount">[assetFailsCount]</OutArgument>
-          </ui:InvokeWorkflowFile.Arguments>
-        </ui:InvokeWorkflowFile>
-      </Switch.Default>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,181" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;Loading the Yml file&quot;]" />
+    <Assign DisplayName="Initialize asset fails count variable" sap:VirtualizedContainerService.HintSize="450,122" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:Int32">[assetFailsCount]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:Int32">0</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Sequence sap2010:Annotation.AnnotationText="Loads the configuration file and merges with other configurations if Merge section in the main file is available." DisplayName="LoadConfig" sap:VirtualizedContainerService.HintSize="450,597" sap2010:WorkflowViewState.IdRef="Sequence_2">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="acc:ConfigSection" sap2010:Annotation.AnnotationText="Type 'aec:ConfigSection' ('clr-namespace:Autossential.Extensions.Configuration;assembly=Autossential.Extensions') could not be resolved and was automatically replaced with 'UnknownType'&#xA;Type 'acc:ConfigSection' ('clr-namespace:Autossential.Configuration.Core;assembly=Autossential.Configuration.Activities.Core') could not be resolved and was automatically replaced with 'UnknownType'" Name="SubConfig" />
+      </Sequence.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" x:Key="yaml" DisplayName="Invoke LoadYaml workflow" sap:VirtualizedContainerService.HintSize="360.8,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\System\Initialization\LoadYaml.xaml">
-        <ui:InvokeWorkflowFile.Arguments>
-          <OutArgument x:TypeArguments="acc:ConfigSection" x:Key="out_Config">[out_Config]</OutArgument>
-          <OutArgument x:TypeArguments="x:Int32" x:Key="out_assetFailsCount">[assetFailsCount]</OutArgument>
-        </ui:InvokeWorkflowFile.Arguments>
-      </ui:InvokeWorkflowFile>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" x:Key="excel" DisplayName="Invoke LoadExcel workflow" sap:VirtualizedContainerService.HintSize="362.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Framework\System\Initialization\LoadExcel.xaml">
-        <ui:InvokeWorkflowFile.Arguments>
-          <OutArgument x:TypeArguments="acc:ConfigSection" x:Key="out_Config">[out_Config]</OutArgument>
-          <OutArgument x:TypeArguments="x:Int32" x:Key="out_assetFailsCount">[assetFailsCount]</OutArgument>
-        </ui:InvokeWorkflowFile.Arguments>
-      </ui:InvokeWorkflowFile>
-    </Switch>
-    <ui:CheckTrue sap2010:Annotation.AnnotationText="If any asset failed to load, throws an exception." DisplayName="Check if there are fails on retrieving asset values" ErrorMessage="[assetFailsCount &amp; &quot; asset(s) fails to be loaded.&quot;]" Expression="[assetFailsCount = 0]" sap:VirtualizedContainerService.HintSize="496.8,88" sap2010:WorkflowViewState.IdRef="CheckTrue_1">
+      <aca:ReadConfigFile DisplayName="Read Config File" FilePath="[configFile]" FileType="AutoDetect" sap:VirtualizedContainerService.HintSize="388,173" sap2010:WorkflowViewState.IdRef="ReadConfigFile_1" Result="[out_Config]" />
+      <If Condition="[out_Config.HasKey(&quot;Merge&quot;)]" DisplayName="If there is configuration merges to be done" sap:VirtualizedContainerService.HintSize="388,92" sap2010:WorkflowViewState.IdRef="If_1">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For each sub configuration file" sap:VirtualizedContainerService.HintSize="450,530" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[out_Config.AsList(Of String)(&quot;Merge&quot;)]">
+            <ui:ForEach.Body>
+              <ActivityAction x:TypeArguments="x:String">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="x:String" Name="configPath" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Reads and merge the configuration" sap:VirtualizedContainerService.HintSize="416,366" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <aca:ReadConfigFile DisplayName="Reads the sub configuration file" FilePath="[configPath]" FileType="AutoDetect" sap:VirtualizedContainerService.HintSize="354,173" sap2010:WorkflowViewState.IdRef="ReadConfigFile_2" Result="[SubConfig]" />
+                  <aca:MergeConfig SectionName="{x:Null}" Destination="[out_Config]" DisplayName="Merge Config" sap:VirtualizedContainerService.HintSize="354,108" sap2010:WorkflowViewState.IdRef="MergeConfig_1" Override="True" Source="[SubConfig]" />
+                </Sequence>
+              </ActivityAction>
+            </ui:ForEach.Body>
+          </ui:ForEach>
+        </If.Then>
+        <If.Else>
+          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,100" sap2010:WorkflowViewState.IdRef="Sequence_4">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Sequence>
+        </If.Else>
+      </If>
+      <If sap2010:Annotation.AnnotationText="Overwrites folder name of the configuration file in case the argument in_OrchestratorFolderName is specified." Condition="[Not String.IsNullOrWhiteSpace(in_OrchestratorFolderName)]" DisplayName="If in_OrchestratorFolderName is specified" sap:VirtualizedContainerService.HintSize="388,162" sap2010:WorkflowViewState.IdRef="If_2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Assign DisplayName="Assign the OrchestratorFolderName from the Orchestrator argument" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_2">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Object">[out_Config("OrchestratorFolderName")]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Object">[in_OrchestratorFolderName]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+        <If.Else>
+          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,100" sap2010:WorkflowViewState.IdRef="Sequence_5">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Sequence>
+        </If.Else>
+      </If>
+    </Sequence>
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LoadAssets workflow" sap:VirtualizedContainerService.HintSize="450,153" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Framework\System\Initialization\LoadAssets.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InOutArgument x:TypeArguments="acc:ConfigSection" x:Key="io_Config">
+          <VisualBasicReference x:TypeArguments="acc:ConfigSection" ExpressionText="out_Config" />
+        </InOutArgument>
+        <InOutArgument x:TypeArguments="x:Int32" x:Key="io_assetFailsCount">
+          <VisualBasicReference x:TypeArguments="x:Int32" ExpressionText="assetFailsCount" />
+        </InOutArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:CheckTrue sap2010:Annotation.AnnotationText="If any asset failed to load, throws an exception." DisplayName="Check if there are fails on retrieving asset values" ErrorMessage="[assetFailsCount &amp; &quot; asset(s) fails to be loaded.&quot;]" Expression="[assetFailsCount = 0]" sap:VirtualizedContainerService.HintSize="450,152" sap2010:WorkflowViewState.IdRef="CheckTrue_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">False</x:Boolean>

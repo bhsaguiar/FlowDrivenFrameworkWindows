@@ -1,0 +1,57 @@
+{
+  "DisplayName": "Main",
+  "Tooltip": null,
+  "HelpLink": null,
+  "Color": null,
+  "OriginalIconFileName": null,
+  "Arguments": [
+    {
+      "Name": "in_Flow",
+      "DisplayName": "in_Flow",
+      "Category": null,
+      "Tooltip": "Overwrites the flow configuration by this one. Can be Producer, Consumer or Hybrid.",
+      "Placeholder": null,
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_OrchestratorFolderName",
+      "DisplayName": "in_OrchestratorFolderName",
+      "Category": null,
+      "Tooltip": "Overwrites the default Folder Name defined in the configuration files by this one.",
+      "Placeholder": null,
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_QueueName",
+      "DisplayName": "in_QueueName",
+      "Category": null,
+      "Tooltip": "Overwrites the default QueueName defined in the configuration files by this one.",
+      "Placeholder": null,
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_ConfigPathToMerge",
+      "DisplayName": "in_ConfigPathToMerge",
+      "Category": null,
+      "Tooltip": "Allows define an external configuration file to be merged during bot execution. If a Flow or a QueueName is defined in the file, it will be overwritten by the dedicated in_Flow and in_QueueName arguments if they are specified.",
+      "Placeholder": null,
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    }
+  ]
+}

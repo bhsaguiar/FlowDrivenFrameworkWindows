@@ -56,7 +56,7 @@ Recover:
 # Each configuration file overwrites the values of the previous one. (Sub-sections are merged)
 # All the configurations available on this file can be splitted in different files. The only requirement for this file is the Merge section.
 Merge:
-    - Framework\Config\Yaml\Logs.yml
+    - Framework\Config\Logs.yml
 #    - AbsoluteOrRelativePathToYourFile.yml    
 
 # ------------------------------------------------------------------------------------------------------------------------

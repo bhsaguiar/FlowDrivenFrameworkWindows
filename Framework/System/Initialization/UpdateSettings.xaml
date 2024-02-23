@@ -1,15 +1,14 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="UpdateSettings" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:aca="clr-namespace:Autossential.Configuration.Activities;assembly=Autossential.Configuration.Activities" xmlns:acc="clr-namespace:Autossential.Configuration.Core;assembly=Autossential.Configuration.Core" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="UpdateSettings" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:aca="clr-namespace:Autossential.Configuration.Activities;assembly=Autossential.Configuration.Activities" xmlns:acc="clr-namespace:Autossential.Configuration.Core;assembly=Autossential.Configuration.Core" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Type 'ac:ConfigSection' ('clr-namespace:Autossential.Extensions.Configuration;assembly=Autossential.Extensions') could not be resolved and was automatically replaced with 'UnknownType'&#xA;Type 'aec:ConfigSection' ('clr-namespace:Autossential.Extensions.Configuration;assembly=Autossential.Extensions') could not be resolved and was automatically replaced with 'UnknownType'&#xA;Type 'acc:ConfigSection' ('clr-namespace:Autossential.Configuration.Core;assembly=Autossential.Configuration.Activities.Core') could not be resolved and was automatically replaced with 'UnknownType'" Name="io_Config" Type="InOutArgument(acc:ConfigSection)" />
     <x:Property Name="in_Flow" Type="InArgument(x:String)" />
-    <x:Property Name="in_OrchestratorFolderName" Type="InArgument(x:String)" />
     <x:Property Name="in_QueueName" Type="InArgument(x:String)" />
     <x:Property Name="in_ConfigPathToMerge" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>824,1824.8</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1006,1990</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>UpdateSettings_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="58">
@@ -39,6 +38,11 @@
       <x:String>System.Xml.Linq</x:String>
       <x:String>UiPath.Core</x:String>
       <x:String>UiPath.Core.Activities</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>System.Numerics</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -77,16 +81,29 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
       <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Updates the configuration with the values defined in the arguments from the Main workflow." DisplayName="UpdateSettings" sap:VirtualizedContainerService.HintSize="526.4,1760" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Updates the configuration with the values defined in the arguments from the Main workflow." DisplayName="UpdateSettings" sap:VirtualizedContainerService.HintSize="530,1925" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <If sap2010:Annotation.AnnotationText="Merges the additional configuration file in case of in_ConfigToMerge argument is specified." Condition="[Not String.IsNullOrWhiteSpace(in_ConfigPathToMerge)]" DisplayName="If in_ConfigToMerge is specified" sap:VirtualizedContainerService.HintSize="483.2,612.8" sap2010:WorkflowViewState.IdRef="If_1">
+    <If sap2010:Annotation.AnnotationText="Merges the additional configuration file in case of in_ConfigToMerge argument is specified." Condition="[Not String.IsNullOrWhiteSpace(in_ConfigPathToMerge)]" DisplayName="If in_ConfigToMerge is specified" sap:VirtualizedContainerService.HintSize="468,986" sap2010:WorkflowViewState.IdRef="If_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -95,28 +112,52 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Reads and merge the configuration" sap:VirtualizedContainerService.HintSize="400,370.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="Reads and merge the configuration" sap:VirtualizedContainerService.HintSize="416,688" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <Sequence.Variables>
             <Variable x:TypeArguments="acc:ConfigSection" sap2010:Annotation.AnnotationText="Type 'aec:ConfigSection' ('clr-namespace:Autossential.Extensions.Configuration;assembly=Autossential.Extensions') could not be resolved and was automatically replaced with 'UnknownType'&#xA;Type 'acc:ConfigSection' ('clr-namespace:Autossential.Configuration.Core;assembly=Autossential.Configuration.Activities.Core') could not be resolved and was automatically replaced with 'UnknownType'" Name="configFromOrchestratorArg" />
+            <Variable x:TypeArguments="x:Int32" Name="assetFailsCount" />
           </Sequence.Variables>
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <aca:ReadConfigFile DisplayName="Reads the configuration file from the Orchestrator argument" FilePath="[in_ConfigPathToMerge]" FileType="AutoDetect" sap:VirtualizedContainerService.HintSize="356.8,144" sap2010:WorkflowViewState.IdRef="ReadConfigFile_1" Result="[configFromOrchestratorArg]" />
-          <aca:MergeConfig SectionName="{x:Null}" Destination="[io_Config]" DisplayName="Reads the configuration file from the Orchestrator argument" sap:VirtualizedContainerService.HintSize="356.8,95.2" sap2010:WorkflowViewState.IdRef="MergeConfig_1" Override="True" Source="[configFromOrchestratorArg]" />
+          <aca:ReadConfigFile DisplayName="Reads the configuration file from the Orchestrator argument" FilePath="[in_ConfigPathToMerge]" FileType="AutoDetect" sap:VirtualizedContainerService.HintSize="354,173" sap2010:WorkflowViewState.IdRef="ReadConfigFile_1" Result="[configFromOrchestratorArg]" />
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LoadAssets workflow" sap:VirtualizedContainerService.HintSize="354,153" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\System\Initialization\LoadAssets.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InOutArgument x:TypeArguments="acc:ConfigSection" x:Key="io_Config">[configFromOrchestratorArg]</InOutArgument>
+              <InOutArgument x:TypeArguments="x:Int32" x:Key="io_assetFailsCount">[assetFailsCount]</InOutArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+          <ui:CheckTrue sap2010:Annotation.AnnotationText="If any asset failed to load, throws an exception." DisplayName="Check if there are fails on retrieving asset values" ErrorMessage="[assetFailsCount &amp; &quot; asset(s) fails to be loaded.&quot;]" Expression="[assetFailsCount = 0]" sap:VirtualizedContainerService.HintSize="354,169" sap2010:WorkflowViewState.IdRef="CheckTrue_1">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:CheckTrue>
+          <aca:MergeConfig SectionName="{x:Null}" Destination="[io_Config]" DisplayName="Reads the configuration file from the Orchestrator argument" sap:VirtualizedContainerService.HintSize="354,108" sap2010:WorkflowViewState.IdRef="MergeConfig_1" Override="True" Source="[configFromOrchestratorArg]" />
         </Sequence>
       </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,78" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </Sequence>
+      </If.Else>
     </If>
-    <If sap2010:Annotation.AnnotationText="Overwrites the process flow of the configuration file in case of in_Flow argument is specified." Condition="[Not String.IsNullOrWhiteSpace(in_Flow)]" DisplayName="If in_Flow is specified" sap:VirtualizedContainerService.HintSize="483.2,312" sap2010:WorkflowViewState.IdRef="If_2">
+    <If sap2010:Annotation.AnnotationText="Overwrites the process flow of the configuration file in case of in_Flow argument is specified." Condition="[Not String.IsNullOrWhiteSpace(in_Flow)]" DisplayName="If in_Flow is specified" sap:VirtualizedContainerService.HintSize="468,402" sap2010:WorkflowViewState.IdRef="If_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Assign DisplayName="Assign the Flow from the Orchestrator argument" sap:VirtualizedContainerService.HintSize="262.4,69.6" sap2010:WorkflowViewState.IdRef="Assign_1">
+        <Assign DisplayName="Assign the Flow from the Orchestrator argument" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_1">
           <Assign.To>
             <OutArgument x:TypeArguments="x:Object">[io_Config("Flow")]</OutArgument>
           </Assign.To>
@@ -125,15 +166,25 @@
           </Assign.Value>
         </Assign>
       </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,78" sap2010:WorkflowViewState.IdRef="Sequence_4">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </Sequence>
+      </If.Else>
     </If>
-    <If sap2010:Annotation.AnnotationText="Overwrites queue name of the configuration file in case the argument in_QueueName is specified." Condition="[Not String.IsNullOrWhiteSpace(in_QueueName)]" DisplayName="If in_QueueName is specified" sap:VirtualizedContainerService.HintSize="483.2,312" sap2010:WorkflowViewState.IdRef="If_3">
+    <If sap2010:Annotation.AnnotationText="Overwrites queue name of the configuration file in case the argument in_QueueName is specified." Condition="[Not String.IsNullOrWhiteSpace(in_QueueName)]" DisplayName="If in_QueueName is specified" sap:VirtualizedContainerService.HintSize="468,407" sap2010:WorkflowViewState.IdRef="If_3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Assign DisplayName="Assign the QueueName from the Orchestrator argument" sap:VirtualizedContainerService.HintSize="262.4,69.6" sap2010:WorkflowViewState.IdRef="Assign_2">
+        <Assign DisplayName="Assign the QueueName from the Orchestrator argument" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_2">
           <Assign.To>
             <OutArgument x:TypeArguments="x:Object">[io_Config("Queue/Name")]</OutArgument>
           </Assign.To>
@@ -142,23 +193,15 @@
           </Assign.Value>
         </Assign>
       </If.Then>
-    </If>
-    <If sap2010:Annotation.AnnotationText="Overwrites folder name of the configuration file in case the argument in_OrchestratorFolderName is specified." Condition="[Not String.IsNullOrWhiteSpace(in_OrchestratorFolderName)]" DisplayName="If in_OrchestratorFolderName is specified" sap:VirtualizedContainerService.HintSize="483.2,312" sap2010:WorkflowViewState.IdRef="If_4">
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-      <If.Then>
-        <Assign DisplayName="Assign the OrchestratorFolderName from the Orchestrator argument" sap:VirtualizedContainerService.HintSize="262.4,69.6" sap2010:WorkflowViewState.IdRef="Assign_3">
-          <Assign.To>
-            <OutArgument x:TypeArguments="x:Object">[io_Config("OrchestratorFolderName")]</OutArgument>
-          </Assign.To>
-          <Assign.Value>
-            <InArgument x:TypeArguments="x:Object">[in_OrchestratorFolderName]</InArgument>
-          </Assign.Value>
-        </Assign>
-      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,100" sap2010:WorkflowViewState.IdRef="Sequence_5">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </Sequence>
+      </If.Else>
     </If>
   </Sequence>
 </Activity>
